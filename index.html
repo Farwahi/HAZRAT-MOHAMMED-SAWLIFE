@@ -9,9 +9,13 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Arial,sans-serif;
-  /* Background image + gradient overlay */
+  /* ✅ More visible background (LESS transparency) */
   background-image:
-    linear-gradient(135deg,rgba(99,102,241,0.9),rgba(236,72,153,0.8)),
+    linear-gradient(
+      135deg,
+      rgba(99,102,241,0.40),
+      rgba(236,72,153,0.35)
+    ),
     url('Background.png');
   background-size:cover;
   background-position:center;
@@ -19,21 +23,20 @@ body{
   background-repeat:no-repeat;
   min-height:100vh;
   padding:20px;
+  padding-bottom:80px; /* space for footer */
 }
 
-/* MAIN CONTAINER (glass card) */
 #a{
   max-width:900px;
   margin:0 auto;
   background:rgba(255,255,255,0.96);
   border-radius:24px;
   box-shadow:0 24px 70px rgba(15,23,42,0.35);
-  padding:32px 28px 28px;
-  border-top:6px solid #6366f1; /* top accent */
+  padding:22px 28px 28px; /* ✅ reduced top padding */
+  border-top:6px solid #6366f1;
   backdrop-filter:blur(12px);
 }
 
-/* HEADER + LOGO */
 .h{text-align:center;margin-bottom:26px;}
 
 .logo{
@@ -41,17 +44,20 @@ body{
   display:flex;
   justify-content:flex-start;
   align-items:center;
-  margin-bottom:8px;
+  margin-bottom:6px; /* ✅ less space */
 }
 
 .logo-img{
-  height:70px;
+  height:58px; /* ✅ smaller */
   width:auto;
   margin-left:5px;
   display:block;
-  border-radius:18px;
+  border-radius:16px;
   box-shadow:0 8px 18px rgba(148,163,184,0.7);
   background:#fff;
+}
+@media (max-width:600px){
+  .logo-img{ height:46px; } /* ✅ smaller on mobile */
 }
 
 .h h1{
@@ -71,6 +77,33 @@ body{
   font-size:14px;
   color:#4b5563;
   margin-top:4px;
+}
+
+/* Language switcher */
+.langbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+.langbar label{
+  font-size:13px;
+  color:#4b5563;
+  font-weight:700;
+}
+.langbar select{
+  padding:8px 10px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:13px;
+  background:#fff;
+  cursor:pointer;
+}
+.langhint{
+  font-size:12px;
+  color:#6b7280;
 }
 
 /* QUESTION AREA */
@@ -191,6 +224,8 @@ button{
   font-weight:600;
   cursor:pointer;
   transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  position:relative;
+  z-index:5; /* clickable */
 }
 button:disabled{
   background:#d1d5db;
@@ -227,7 +262,12 @@ button:not(:disabled):active{
   margin-top:10px;
 }
 
-/* EXTRA LAYOUT UNDER QUESTION BUTTONS */
+/* ✅ WhatsApp button */
+.wa-btn{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;
+}
+
 .btn-row{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -313,11 +353,105 @@ button:not(:disabled):active{
   margin-bottom:10px;
   display:none;
 }
+
+/* ✅ AYAT IMAGE (your uploaded photo) */
+.ayat-img{
+  text-align:center;
+  margin-bottom:8px; /* reduced gap */
+}
+.ayat-img img{
+  width:220px;       /* desktop smaller */
+  max-width:100%;
+  height:auto;
+  display:inline-block;
+}
+@media (max-width:600px){
+  .ayat-img{ margin-bottom:6px; }
+  .ayat-img img{ width:150px; } /* mobile smaller */
+}
+
+/* ===== Colorful header (top block) ===== */
+.header-box{
+  position:relative;
+  padding:18px 16px 16px; /* ✅ tighter for mobile + desktop */
+  border-radius:22px;
+  margin-top:4px;
+  margin-bottom:18px;
+  overflow:hidden;
+
+  background:
+    radial-gradient(900px 300px at 10% 10%, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(900px 300px at 90% 0%, rgba(255,255,255,.18), transparent 55%),
+    linear-gradient(135deg, #6366f1, #ec4899);
+
+  box-shadow:0 18px 40px rgba(17,24,39,.25);
+  border:1px solid rgba(255,255,255,.22);
+}
+
+/* decoration layer */
+.header-box::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(300px 180px at 20% 30%, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(320px 220px at 85% 65%, rgba(255,255,255,.18), transparent 62%);
+  pointer-events:none;
+}
+
+/* header decoration never blocks clicks */
+.header-box{ isolation:isolate; }
+.header-box::after{ z-index:0; }
+.header-box > *{ position:relative; z-index:1; }
+
+.header-box h1{
+  color:#ffffff;
+  text-shadow:0 10px 26px rgba(0,0,0,.25);
+}
+.header-box .designer,
+.header-box .ci{
+  color:rgba(255,255,255,.90);
+}
+.header-box .langbar{margin-top:10px;gap:10px;}
+.header-box .langbar label{color:rgba(255,255,255,.95);}
+.header-box .langhint{color:rgba(255,255,255,.85);}
+.header-box .langbar select{
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.92);
+  box-shadow:0 10px 22px rgba(0,0,0,.15);
+}
+.header-box .ci{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(10px);
+}
+
+/* ✅ FOOTER ON MAIN BACKGROUND */
+#pageFooter{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  z-index:9999;
+  text-align:center;
+  padding:10px 12px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.3px;
+  color:rgba(255,255,255,.92);
+  background:linear-gradient(135deg, rgba(99,102,241,.55), rgba(236,72,153,.45));
+  backdrop-filter: blur(10px);
+  border-top:1px solid rgba(255,255,255,.25);
+}
 </style>
+
 </head>
 
 <body>
-<div id="a"></div>
+  <div id="a"></div>
+  <div id="pageFooter">@IFA Learning Hub 2026</div>
 
 <script>
 var cq=0, ua={}, lq={}, sr=0, APP=document.getElementById('a');
@@ -325,104 +459,414 @@ var stName="", stDob="";
 var fq = {}; // flagged questions
 
 /* TIMERS */
-var totalTime = 600;      // 1 hour in seconds
+var totalTime = 600;       // 1 hour in seconds
 var totalInterval = null;
-var questionTime = 30;     // 60 seconds per question
+var questionTime = 30;     // per question (seconds)
 var qRemaining = questionTime;
 var qInterval = null;
 
+/* =========================
+   LANGUAGE SYSTEM
+   ========================= */
+var LANG_KEY = "quizLanguage";
+function getLang(){ return localStorage.getItem(LANG_KEY) || "ur"; }
+function setLang(v){ localStorage.setItem(LANG_KEY, v); }
+function split3(txt){
+  var parts = String(txt||"").split(" | ");
+  return {
+    ur: parts[0] || "",
+    en: parts[1] || parts[0] || "",
+    ru: parts[2] || parts[1] || parts[0] || ""
+  };
+}
+function t(txt){
+  var p = split3(txt);
+  var l = getLang();
+  return (l==="en"?p.en : l==="ru"?p.ru : p.ur);
+}
+function langBarHTML(){
+  var l = getLang();
+  return ''+
+  '<div class="langbar">'+
+    '<label>'+t("زبان | Language | Язык")+'</label>'+
+    '<select id="langSelect" onchange="handleLangChange(this.value)">'+
+      '<option value="ur" '+(l==="ur"?"selected":"")+'>اردو</option>'+
+      '<option value="en" '+(l==="en"?"selected":"")+'>English</option>'+
+      '<option value="ru" '+(l==="ru"?"selected":"")+'>Русский</option>'+
+    '</select>'+
+    '<span class="langhint">'+t("جب چاہیں تبدیل کریں | Switch anytime | Можно менять в любой момент")+'</span>'+
+  '</div>';
+}
+function handleLangChange(v){
+  setLang(v);
+  if(document.getElementById("regName") || document.getElementById("regDob")) showRegister();
+  else if(document.querySelector(".start-screen")) showStart();
+  else if(document.querySelector(".r")) rr();
+  else rq();
+}
 
+/* =========================
+   UI TRANSLATIONS
+   ========================= */
+var UI = {
+  ur: {
+    title: "حضرت محمد ﷺ لائف کوئز",
+    designer: "ڈیزائن: ام فروا سیدۂ · DG Skills",
+    candidate: "امتحانی امیدوار",
+    dob: "تاریخ پیدائش",
 
- /* QUESTION BANK – EDIT THIS PART ONLY */
-/* QUESTION BANK – EDIT THIS PART ONLY */
+    registerMsg: "کوئز شروع کرنے سے پہلے اپنی معلومات درج کریں۔",
+    fullName: "پورا نام",
+    dobLabel: "تاریخ پیدائش",
+    regError: "براہِ کرم نام اور تاریخِ پیدائش درج کریں۔",
+    registerBtn: "رجسٹر کریں اور جاری رکھیں",
+
+    quizInfo: "کوئز کی معلومات",
+    totalTestTime: "کل وقت: 1 گھنٹہ",
+    eachQuestionTime: "ہر سوال کا وقت",
+    questionsCount: "کل سوالات: 20",
+    randomOrder: "ہر بار سوالات رینڈم ہوں گے",
+    controls: "Previous, Skip اور Flag استعمال کریں",
+    emailInfo: "نتیجہ DG Skills کو ای میل کیا جا سکتا ہے",
+    startBtn: "کوئز شروع کریں",
+
+    question: "سوال",
+    of: "میں سے",
+    totalTime: "کل وقت",
+    questionTime: "سوال کا وقت",
+
+    submit: "جواب جمع کریں",
+    next: "اگلا سوال",
+    viewResults: "نتائج دیکھیں",
+    prev: "پچھلا سوال",
+    skip: "سوال چھوڑ دیں",
+    flag: "سوال نشان زد کریں",
+    unflag: "نشان ہٹائیں",
+    flagged: "نشان زد",
+    single: "سنگل انتخاب",
+    multiple: "متعدد انتخاب",
+
+    correct: "درست!",
+    incorrect: "غلط",
+
+    complete: "کوئز مکمل!",
+    scored: "آپ نے حاصل کیا",
+    outOf: "میں سے",
+    noteAttempt: "نوٹ: یہ آپ کی",
+    attemptWord: "ویں کوشش ہے۔",
+    emailBtn: "نتیجہ ای میل کریں",
+    restart: "ختم کریں اور دوبارہ شروع کریں"
+  },
+
+  en: {
+    title: "Hazrat Mohammad SAW Life Quiz",
+    designer: "Designed by Ume Farwa Syeda · DG Skills",
+    candidate: "Candidate",
+    dob: "DOB",
+
+    registerMsg: "Please register your details before starting the quiz.",
+    fullName: "Full Name",
+    dobLabel: "Date of Birth",
+    regError: "Please enter your name and date of birth.",
+    registerBtn: "Register & Continue",
+
+    quizInfo: "Quiz Information",
+    totalTestTime: "Total test time: 1 hour",
+    eachQuestionTime: "Each question time",
+    questionsCount: "Total questions: 20",
+    randomOrder: "Questions appear in random order each attempt",
+    controls: "Use Previous, Skip and Flag to manage your time",
+    emailInfo: "Final score can be emailed directly to DG Skills",
+    startBtn: "Start Quiz",
+
+    question: "Question",
+    of: "of",
+    totalTime: "Total time",
+    questionTime: "Question time",
+
+    submit: "Submit Answer",
+    next: "Next Question",
+    viewResults: "View Results",
+    prev: "Previous Question",
+    skip: "Skip Question",
+    flag: "Flag Question",
+    unflag: "Unflag Question",
+    flagged: "Flagged",
+    single: "Single Select",
+    multiple: "Multiple Select",
+
+    correct: "Correct!",
+    incorrect: "Incorrect",
+
+    complete: "Quiz Complete!",
+    scored: "You scored",
+    outOf: "out of",
+    noteAttempt: "Note: This is your",
+    attemptWord: "attempt for this quiz.",
+    emailBtn: "Email Result to DG Skills",
+    restart: "End & Restart"
+  },
+
+  ru: {
+    title: "Викторина о жизни Пророка Мухаммада (мир ему)",
+    designer: "Дизайн: Ume Farwa Syeda · DG Skills",
+    candidate: "Кандидат",
+    dob: "Дата рождения",
+
+    registerMsg: "Пожалуйста, введите данные перед началом теста.",
+    fullName: "Полное имя",
+    dobLabel: "Дата рождения",
+    regError: "Пожалуйста, введите имя и дату рождения.",
+    registerBtn: "Зарегистрироваться и продолжить",
+
+    quizInfo: "Информация о тесте",
+    totalTestTime: "Общее время теста: 1 час",
+    eachQuestionTime: "Время на вопрос",
+    questionsCount: "Всего вопросов: 20",
+    randomOrder: "Вопросы показываются в случайном порядке",
+    controls: "Используйте Назад, Пропустить и Отметить",
+    emailInfo: "Результат можно отправить в DG Skills",
+    startBtn: "Начать тест",
+
+    question: "Вопрос",
+    of: "из",
+    totalTime: "Общее время",
+    questionTime: "Время вопроса",
+
+    submit: "Отправить ответ",
+    next: "Следующий вопрос",
+    viewResults: "Посмотреть результат",
+    prev: "Предыдущий вопрос",
+    skip: "Пропустить вопрос",
+    flag: "Отметить вопрос",
+    unflag: "Убрать отметку",
+    flagged: "Отмечено",
+    single: "Один вариант",
+    multiple: "Несколько вариантов",
+
+    correct: "Правильно!",
+    incorrect: "Неправильно",
+
+    complete: "Тест завершён!",
+    scored: "Ваш результат",
+    outOf: "из",
+    noteAttempt: "Примечание: это ваша",
+    attemptWord: "попытка.",
+    emailBtn: "Отправить результат в DG Skills",
+    restart: "Завершить и начать заново"
+  }
+};
+function ui(key){
+  var l=getLang();
+  return (UI[l] && UI[l][key]) ? UI[l][key] : key;
+}
+
+/* =========================
+   ✅ QUESTION BANK (HAZRAT MOHAMMAD SAW) — UR | EN | RU
+   ========================= */
 var qs = [
 
- {i:1, q:"پیغمبر اکرم ﷺ کے والد کا نام کیا تھا؟",
-  o:["ابوطالب","عبداللہ بن عبدالمطلب","حارث","نوفل"],
-  c:[1], m:0},
+{i:1,
+ q:"پیغمبر اکرم ﷺ کے والد کا نام کیا تھا؟ | What was the name of Prophet Muhammad’s (SAW) father? | Как звали отца Пророка Мухаммада (мир ему)?",
+ o:[
+   "ابوطالب | Abu Talib | Абу Талиб",
+   "عبداللہ بن عبدالمطلب | Abdullah bin Abdul Muttalib | Абдулла ибн Абдуль-Мутталиб",
+   "حارث | Harith | Харис",
+   "نوفل | Nawfal | Навфаль"
+ ],
+ c:[1], m:0},
 
- {i:2, q:"پیغمبر ﷺ کی والدہ کون تھیں؟",
-  o:["فاطمہ بنت اسد","آمنہ بنت وہب","صفیہ","ام سلمہ"],
-  c:[1], m:0},
+{i:2,
+ q:"پیغمبر ﷺ کی والدہ کون تھیں؟ | Who was the mother of Prophet Muhammad (SAW)? | Кто была матерью Пророка Мухаммада (мир ему)?",
+ o:[
+   "فاطمہ بنت اسد | Fatima bint Asad | Фатима бинт Асад",
+   "آمنہ بنت وہب | Amina bint Wahb | Амина бинт Вахб",
+   "صفیہ | Safiyyah | Сафийя",
+   "ام سلمہ | Umm Salama | Умм Салама"
+ ],
+ c:[1], m:0},
 
- {i:3, q:"شیعہ عقیدہ کے مطابق پیغمبر ﷺ کی کون سی اولاد جوانی تک زندہ رہیں؟",
-  o:["زینب","رقیہ","ام کلثوم","فاطمہؑ"],
-  c:[3], m:0},
+{i:3,
+ q:"شیعہ عقیدہ کے مطابق پیغمبر ﷺ کی کون سی اولاد جوانی تک زندہ رہیں؟ | According to Shia belief, which child of the Prophet (SAW) survived into adulthood? | Согласно шиитскому вероучению, кто из детей Пророка (мир ему) дожил до взрослого возраста?",
+ o:[
+   "زینب | Zaynab | Зайнаб",
+   "رقیہ | Ruqayyah | Рукайя",
+   "ام کلثوم | Umm Kulthum | Умм Кульсум",
+   "فاطمہؑ | Fatima (SA) | Фатима (мир ей)"
+ ],
+ c:[3], m:0},
 
- {i:4, q:"شیعہ علما کے مطابق پیغمبر ﷺ کی کتنی حقیقی بیٹیاں تھیں؟",
-  o:["چار","تین","دو","ایک (صرف سیدہ فاطمہؑ)"],
-  c:[3], m:0},
+{i:4,
+ q:"شیعہ علما کے مطابق پیغمبر ﷺ کی کتنی حقیقی بیٹیاں تھیں؟ | According to Shia scholars, how many biological daughters did the Prophet (SAW) have? | По мнению шиитских ученых, сколько родных дочерей было у Пророка (мир ему)?",
+ o:[
+   "چار | Four | Четыре",
+   "تین | Three | Три",
+   "دو | Two | Две",
+   "ایک (صرف سیدہ فاطمہؑ) | One (only Lady Fatima SA) | Одна (только Фатима, мир ей)"
+ ],
+ c:[3], m:0},
 
- {i:5, q:"پیغمبر ﷺ کے بیٹوں کے نام کون سے تھے؟",
-  o:["حسنؑ، حسینؑ","قاسم، عبداللہ (طیب/طاہر)، ابراہیم","عباس، حمزہ","صرف ابراہیم"],
-  c:[1], m:0},
+{i:5,
+ q:"پیغمبر ﷺ کے بیٹوں کے نام کون سے تھے؟ | What were the names of the sons of Prophet Muhammad (SAW)? | Как звали сыновей Пророка Мухаммада (мир ему)?",
+ o:[
+   "حسنؑ، حسینؑ | Hasan & Husayn | Хасан и Хусейн",
+   "قاسم، عبداللہ، ابراہیم | Qasim, Abdullah, Ibrahim | Касим, Абдулла, Ибрахим",
+   "عباس، حمزہ | Abbas, Hamza | Аббас, Хамза",
+   "صرف ابراہیم | Only Ibrahim | Только Ибрахим"
+ ],
+ c:[1], m:0},
 
- {i:6, q:"ابراہیم بن رسول اللہ ﷺ کی والدہ کون تھیں؟",
-  o:["خدیجہؑ","ام سلمہؑ","ماریہ قبطیہؑ","عائشہ"],
-  c:[2], m:0},
+{i:6,
+ q:"ابراہیم بن رسول اللہ ﷺ کی والدہ کون تھیں؟ | Who was the mother of Ibrahim, son of the Prophet (SAW)? | Кто была матерью Ибрахима, сына Пророка (мир ему)?",
+ o:[
+   "خدیجہؑ | Khadija (SA) | Хадиджа (мир ей)",
+   "ام سلمہؑ | Umm Salama | Умм Салама",
+   "ماریہ قبطیہؑ | Maria al-Qibtiyya | Мария аль-Кибтия",
+   "عائشہ | Aisha | Аиша"
+ ],
+ c:[2], m:0},
 
- {i:7, q:"ابراہیم بن محمد ﷺ کہاں مدفون ہیں؟",
-  o:["نجف","کربلا","جنت البقیع","مسجد نبوی"],
-  c:[2], m:0},
+{i:7,
+ q:"ابراہیم بن محمد ﷺ کہاں مدفون ہیں؟ | Where is Ibrahim, son of Prophet Muhammad (SAW), buried? | Где похоронен Ибрахим, сын Пророка (мир ему)?",
+ o:[
+   "نجف | Najaf | Наджаф",
+   "کربلا | Karbala | Кербела",
+   "جنت البقیع | Jannat al-Baqi | Джаннат аль-Баки",
+   "مسجد نبوی | Masjid an-Nabawi | Мечеть Пророка"
+ ],
+ c:[2], m:0},
 
- {i:8, q:"پیغمبر ﷺ کی زیادہ تر اولاد کی والدہ کون تھیں؟",
-  o:["عائشہ","ام سلمہؑ","خدیجہؑ","حفصہ"],
-  c:[2], m:0},
+{i:8,
+ q:"پیغمبر ﷺ کی زیادہ تر اولاد کی والدہ کون تھیں؟ | Who was the mother of most of the Prophet’s (SAW) children? | Кто была матерью большинства детей Пророка (мир ему)?",
+ o:[
+   "عائشہ | Aisha | Аиша",
+   "ام سلمہ | Umm Salama | Умм Салама",
+   "خدیجہؑ | Khadija (SA) | Хадиджа (мир ей)",
+   "حفصہ | Hafsa | Хафса"
+ ],
+ c:[2], m:0},
 
- {i:9, q:"پیغمبر ﷺ کی کن بیویوں سے اولاد ہوئی؟",
-  o:["صرف خدیجہؑ","صرف ماریہؑ","خدیجہؑ اور ماریہؑ","تمام ازواج"],
-  c:[2], m:0},
+{i:9,
+ q:"پیغمبر ﷺ کی کن بیویوں سے اولاد ہوئی؟ | From which wives did the Prophet (SAW) have children? | От каких жен у Пророка (мир ему) были дети?",
+ o:[
+   "صرف خدیجہؑ | Only Khadija | Только Хадиджа",
+   "صرف ماریہؑ | Only Maria | Только Мария",
+   "خدیجہؑ اور ماریہؑ | Khadija & Maria | Хадиджа и Мария",
+   "تمام ازواج | All wives | От всех жен"
+ ],
+ c:[2], m:0},
 
- {i:10, q:"شیعہ مصادر کے مطابق پیغمبر ﷺ کہاں مدفون ہیں؟",
-  o:["جنت البقیع","مسجد الحرام","مسجد نبوی میں اپنے گھر کے حجرے میں جہاں وصال ہوا","عائشہ کے ذاتی حجرے میں"],
-  c:[2], m:0},
+{i:10,
+ q:"شیعہ مصادر کے مطابق پیغمبر ﷺ کہاں مدفون ہیں؟ | According to Shia sources, where is the Prophet (SAW) buried? | Согласно шиитским источникам, где похоронен Пророк (мир ему)?",
+ o:[
+   "جنت البقیع | Jannat al-Baqi | Джаннат аль-Баки",
+   "مسجد الحرام | Masjid al-Haram | Запретная мечеть",
+   "مسجد نبوی میں اپنے حجرے میں | In his chamber in Masjid an-Nabawi | В своей комнате в Мечети Пророка",
+   "عائشہ کے حجرے میں | In Aisha’s chamber | В комнате Аиши"
+ ],
+ c:[2], m:0},
 
- {i:11, q:"والدہ کی وفات کے بعد پیغمبر ﷺ کی پرورش کس نے کی؟",
-  o:["ابو سفیان","عبدالمطلب","حارث","عمر"],
-  c:[1], m:0},
+{i:11,
+ q:"والدہ کی وفات کے بعد پیغمبر ﷺ کی پرورش کس نے کی؟ | Who raised the Prophet (SAW) after his mother’s death? | Кто воспитывал Пророка (мир ему) после смерти его матери?",
+ o:[
+   "ابو سفیان | Abu Sufyan | Абу Суфьян",
+   "عبدالمطلب | Abdul Muttalib | Абдуль-Мутталиб",
+   "حارث | Harith | Харис",
+   "عمر | Umar | Умар"
+ ],
+ c:[1], m:0},
 
- {i:12, q:"پیغمبر ﷺ کی سب سے چھوٹی اولاد کون تھے؟",
-  o:["قاسم","عبداللہ","حسنؑ","ابراہیم"],
-  c:[3], m:0},
+{i:12,
+ q:"پیغمبر ﷺ کی سب سے چھوٹی اولاد کون تھے؟ | Who was the youngest child of the Prophet (SAW)? | Кто был самым младшим ребенком Пророка (мир ему)?",
+ o:[
+   "قاسم | Qasim | Касим",
+   "عبداللہ | Abdullah | Абдулла",
+   "حسنؑ | Hasan | Хасан",
+   "ابراہیم | Ibrahim | Ибрахим"
+ ],
+ c:[3], m:0},
 
- {i:13, q:"پیغمبر ﷺ کے کون سے بچے بچپن میں وفات پا گئے؟",
-  o:["کوئی نہیں","صرف ابراہیم","صرف قاسم","تمام بیٹے"],
-  c:[3], m:0},
+{i:13,
+ q:"پیغمبر ﷺ کے کون سے بچے بچپن میں وفات پا گئے؟ | Which children of the Prophet (SAW) passed away in childhood? | Какие дети Пророка (мир ему) умерли в детстве?",
+ o:[
+   "کوئی نہیں | None | Никто",
+   "صرف ابراہیم | Only Ibrahim | Только Ибрахим",
+   "صرف قاسم | Only Qasim | Только Касим",
+   "تمام بیٹے | All sons | Все сыновья"
+ ],
+ c:[3], m:0},
 
- {i:14, q:"شیعہ مصادر کے مطابق رسول اللہ ﷺ کی تاریخِ پیدائش اور تاریخِ وفات کیا ہے؟",
-  o:["12 ربیع الاول — 2 شعبان","17 ربیع الاول — 28 صفر","1 محرم — 10 محرم","27 رجب — 15 شعبان"],
-  c:[1], m:0},
+{i:14,
+ q:"شیعہ مصادر کے مطابق رسول اللہ ﷺ کی تاریخِ پیدائش اور وفات کیا ہے؟ | According to Shia sources, what are the birth and death dates of the Prophet (SAW)? | Согласно шиитским источникам, даты рождения и смерти Пророка (мир ему)?",
+ o:[
+   "12 ربیع الاول — 2 شعبان | 12 Rabi al-Awwal — 2 Sha'ban | 12 Раби аль-авваль — 2 Шаабан",
+   "17 ربیع الاول — 28 صفر | 17 Rabi al-Awwal — 28 Safar | 17 Раби аль-авваль — 28 Сафар",
+   "1 محرم — 10 محرم | 1 Muharram — 10 Muharram | 1 Мухаррам — 10 Мухаррам",
+   "27 رجب — 15 شعبان | 27 Rajab — 15 Sha'ban | 27 Раджаб — 15 Шаабан"
+ ],
+ c:[1], m:0},
 
- {i:15, q:"پیغمبر ﷺ کی پہلی زوجہ کون تھیں؟",
-  o:["عائشہ","خدیجہؑ","ام سلمہؑ","حفصہ"],
-  c:[1], m:0},
+{i:15,
+ q:"پیغمبر ﷺ کی پہلی زوجہ کون تھیں؟ | Who was the first wife of Prophet Muhammad (SAW)? | Кто была первой женой Пророка Мухаммада (мир ему)?",
+ o:[
+   "عائشہ | Aisha | Аиша",
+   "خدیجہؑ | Khadija (SA) | Хадиджа (мир ей)",
+   "ام سلمہؑ | Umm Salama | Умм Салама",
+   "حفصہ | Hafsa | Хафса"
+ ],
+ c:[1], m:0},
 
- {i:16, q:"سب سے پہلے اسلام قبول کرنے والی خاتون کون تھیں؟",
-  o:["عائشہ","خدیجہؑ","زینب","ام کلثوم"],
-  c:[1], m:0},
+{i:16,
+ q:"سب سے پہلے اسلام قبول کرنے والی خاتون کون تھیں؟ | Who was the first woman to accept Islam? | Кто была первой женщиной, принявшей ислам?",
+ o:[
+   "عائشہ | Aisha | Аиша",
+   "خدیجہؑ | Khadija (SA) | Хадиджа (мир ей)",
+   "زینب | Zaynab | Зайнаб",
+   "ام کلثوم | Umm Kulthum | Умм Кульсум"
+ ],
+ c:[1], m:0},
 
- {i:17, q:"شیعہ عقیدہ کے مطابق پیغمبر ﷺ کی نسل کس کے ذریعے آگے بڑھی؟",
-  o:["ابراہیم","قاسم","سیدہ فاطمہؑ","عبداللہ"],
-  c:[2], m:0},
+{i:17,
+ q:"شیعہ عقیدہ کے مطابق پیغمبر ﷺ کی نسل کس کے ذریعے جاری رہی؟ | According to Shia belief, through whom did the Prophet’s lineage continue? | Согласно шиитскому вероучению, через кого продолжилось потомство Пророка?",
+ o:[
+   "ابراہیم | Ibrahim | Ибрахим",
+   "قاسم | Qasim | Касим",
+   "سیدہ فاطمہؑ | Lady Fatima (SA) | Фатима (мир ей)",
+   "عبداللہ | Abdullah | Абдулла"
+ ],
+ c:[2], m:0},
 
- {i:18, q:"پیغمبر ﷺ کے چچا جنہوں نے سب سے زیادہ مدد کی، کون تھے؟",
-  o:["عباس","حارث","ابو طالبؑ (شیعہ عقیدہ کے مطابق مؤمن)","ابو جہل"],
-  c:[2], m:0},
+{i:18,
+ q:"پیغمبر ﷺ کے سب سے بڑے مددگار چچا کون تھے؟ | Which uncle supported the Prophet (SAW) the most? | Какой дядя больше всего поддерживал Пророка (мир ему)?",
+ o:[
+   "عباس | Abbas | Аббас",
+   "حارث | Harith | Харис",
+   "ابو طالبؑ | Abu Talib (AS) | Абу Талиб (мир ему)",
+   "ابو جہل | Abu Jahl | Абу Джахль"
+ ],
+ c:[2], m:0},
 
- {i:19, q:"کیا پیغمبر ﷺ کے کوئی بیٹے ان کے بعد زندہ رہے؟",
-  o:["ہاں","نہیں"],
-  c:[1], m:0},
+{i:19,
+ q:"کیا پیغمبر ﷺ کے کوئی بیٹے ان کے بعد زندہ رہے؟ | Did any sons of the Prophet (SAW) survive after him? | Остались ли сыновья Пророка (мир ему) в живых после него?",
+ o:[
+   "ہاں | Yes | Да",
+   "نہیں | No | Нет"
+ ],
+ c:[1], m:0},
 
- {i:20, q:"شیعہ تاریخ کے مطابق پیغمبر ﷺ کی ازواج کی کل تعداد کیا تھی؟",
-  o:["ایک","چار","نو سے گیارہ","دو"],
-  c:[2], m:0}
+{i:20,
+ q:"شیعہ تاریخ کے مطابق پیغمبر ﷺ کی ازواج کی کل تعداد کیا تھی؟ | According to Shia history, how many wives did the Prophet (SAW) have? | Согласно шиитской истории, сколько жен было у Пророка (мир ему)?",
+ o:[
+   "ایک | One | Одна",
+   "چار | Four | Четыре",
+   "نو سے گیارہ | Nine to eleven | От девяти до одиннадцати",
+   "دو | Two | Две"
+ ],
+ c:[2], m:0}
 
 ];
 
-
-
-
-/* SHUFFLE QUESTIONS – random order each attempt */
+/* SHUFFLE QUESTIONS */
 function shuffleQuestions(){
   for (var i = qs.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
@@ -432,7 +876,10 @@ function shuffleQuestions(){
   }
 }
 
-/* LOGO HTML – uses image file */
+/* AYAT + LOGO HTML */
+function ayatHTML(){
+  return '<div class="ayat-img"><img src="ayat.png" alt="Ayat"></div>';
+}
 function logoHTML(){
   return '<div class="logo">'+
            '<img src="dg skills logo.png" class="logo-img" alt="DG Skills Logo">'+
@@ -448,10 +895,10 @@ function formatTime(sec){
 
 /* UPDATE TIMER LABELS */
 function updateTimerLabels(){
-  var t = document.getElementById('totalTimer');
-  var q = document.getElementById('questionTimer');
-  if(t) t.textContent = formatTime(totalTime);
-  if(q) q.textContent = formatTime(qRemaining);
+  var t1 = document.getElementById('totalTimer');
+  var t2 = document.getElementById('questionTimer');
+  if(t1) t1.textContent = formatTime(totalTime);
+  if(t2) t2.textContent = formatTime(qRemaining);
 }
 
 /* STOP ALL TIMERS */
@@ -462,7 +909,7 @@ function stopTimers(){
   qInterval = null;
 }
 
-/* START TOTAL TEST TIMER (1 HOUR) */
+/* START TOTAL TEST TIMER */
 function startTotalTimer(){
   if(totalInterval) clearInterval(totalInterval);
   totalInterval = setInterval(function(){
@@ -472,7 +919,6 @@ function startTotalTimer(){
       if(totalTime <= 0){
         totalTime = 0;
         updateTimerLabels();
-        // Time up for whole test → show results
         stopTimers();
         rr();
       }
@@ -480,7 +926,7 @@ function startTotalTimer(){
   },1000);
 }
 
-/* START QUESTION TIMER (60 sec per current question) */
+/* START QUESTION TIMER */
 function startQuestionTimer(){
   if(qInterval) clearInterval(qInterval);
   qRemaining = questionTime;
@@ -493,10 +939,8 @@ function startQuestionTimer(){
         qRemaining = 0;
         updateTimerLabels();
         clearInterval(qInterval);
-        // lock this question if not already
         var qId = qs[cq].i;
         if(!lq[qId]) lq[qId] = 1;
-        // move to next or finish
         if(cq < qs.length - 1){
           cq++;
           startQuestionTimer();
@@ -533,28 +977,30 @@ function rq(){
   var isFlagged = !!fq[q.i];
 
   var h='';
-  h+='<div class="h">'+
+  h += ayatHTML(); /* ✅ AYAT on top */
+  h+='<div class="h header-box">'+
        logoHTML()+
-       '<h1>Hazrat Mohammad SAW Life Quiz</h1>'+
-       '<div class="designer">Designed by Ume Farwa Syeda · DG Skills</div>'+
-       (stName?'<div class="ci">Candidate: <strong>'+stName+
-               '</strong> | DOB: <strong>'+stDob+'</strong></div>':'')+
+       '<h1>'+ui("title")+'</h1>'+
+       '<div class="designer">'+ui("designer")+'</div>'+
+       langBarHTML()+
+       (stName?'<div class="ci">'+ui("candidate")+': <strong>'+stName+
+               '</strong> | '+ui("dob")+': <strong>'+stDob+'</strong></div>':'')+
      '</div>';
 
   h+='<div class="pi">'+
        '<div class="pi-left">'+
-         '<span>Question '+(cq+1)+' of '+qs.length+'</span>'+
-         '<span style="font-size:12px;color:#6b7280;">Total time: <span id="totalTimer"></span> · Question time: <span id="questionTimer"></span></span>'+
+         '<span>'+ui("question")+' '+(cq+1)+' '+ui("of")+' '+qs.length+'</span>'+
+         '<span style="font-size:12px;color:#6b7280;">'+ui("totalTime")+': <span id="totalTimer"></span> · '+ui("questionTime")+': <span id="questionTimer"></span></span>'+
        '</div>'+
        '<div class="pi-right">'+
-         '<span class="qt">'+(q.m?'Multiple':'Single')+' Select</span>'+
-         (isFlagged?'<span class="qt flagged">Flagged</span>':'')+
+         '<span class="qt">'+(q.m?ui("multiple"):ui("single"))+'</span>'+
+         (isFlagged?'<span class="qt flagged">'+ui("flagged")+'</span>':'')+
        '</div>'+
      '</div>';
 
   h+='<div class="pb"><div class="pf" style="width:'+pg+'%"></div></div>';
 
-  h+='<div class="q">'+q.q+'</div><div class="os">';
+  h+='<div class="q">'+t(q.q)+'</div><div class="os">';
 
   for(var j=0;j<q.o.length;j++){
     var sl=a.indexOf(j)!==-1;
@@ -567,8 +1013,9 @@ function rq(){
     }else if(sl){
       cl+=' s';
     }
+    var letter = String.fromCharCode(65 + j); // A, B, C, D
     h+='<div class="'+cl+'" '+(il?'':'onclick="so('+j+')"')+'>'+
-         '<span>'+q.o[j]+'</span>'+
+         '<span><strong>'+letter+'. </strong>'+t(q.o[j])+'</span>'+
          (il && cr ? '<span>&#10003;</span>' :
           il && sl ? '<span>&#10007;</span>' : '')+
        '</div>';
@@ -577,23 +1024,23 @@ function rq(){
 
   if(il){
     h+='<div class="fb '+(ic(q.i)?'co':'ic')+'">'+
-       (ic(q.i)?'&#10003; Correct!':'&#10007; Incorrect')+
+       (ic(q.i)?'&#10003; '+ui("correct"):'&#10007; '+ui("incorrect"))+
        '</div>'+
        '<button class="nb" onclick="nq()">'+
-         (cq===qs.length-1?'View Results':'Next Question')+
+         (cq===qs.length-1?ui("viewResults"):ui("next"))+
        '</button>';
   }else{
-    h+='<button class="sb" onclick="sa()"'+(a.length===0?' disabled':'')+'>Submit Answer</button>'+
-       '<button class="skb" onclick="skq()">Skip Question</button>';
+    h+='<button class="sb" onclick="sa()"'+(a.length===0?' disabled':'')+'>'+ui("submit")+'</button>'+
+       '<button class="skb" onclick="skq()">'+ui("skip")+'</button>';
   }
 
   h+='<div class="btn-row">'+
-       '<button class="nb" onclick="prevQ()"'+(cq===0?' disabled':'')+'>Previous Question</button>'+
-       '<button class="fgb" onclick="toggleFlag()">'+(isFlagged?'Unflag Question':'Flag Question')+'</button>'+
+       '<button class="nb" onclick="prevQ()"'+(cq===0?' disabled':'')+'>'+ui("prev")+'</button>'+
+       '<button class="fgb" onclick="toggleFlag()">'+(isFlagged?ui("unflag"):ui("flag"))+'</button>'+
      '</div>';
 
   APP.innerHTML=h;
-  updateTimerLabels(); // refresh labels for this question
+  updateTimerLabels();
 }
 
 /* HANDLE OPTION SELECT */
@@ -657,7 +1104,7 @@ function toggleFlag(){
   rq();
 }
 
-/* SHOW RESULTS – WITH ATTEMPT HIGHLIGHT & timers stopped */
+/* SHOW RESULTS */
 function rr(){
   stopTimers();
 
@@ -667,19 +1114,11 @@ function rr(){
   }
   var pt=Math.round((ct/qs.length)*100);
 
-  /* attempt tracking */
-  /* attempt tracking – reset after 3 attempts */
-var key = 'basicITQuiz_' + stName + '_' + stDob;
-var previousAttempts = parseInt(localStorage.getItem(key) || '0', 10);
-
-// If candidate has already done 3 or more attempts, reset counter
-if (previousAttempts >= 3) {
-    previousAttempts = 0;
-}
-
-var currentAttempt = previousAttempts + 1;
-localStorage.setItem(key, currentAttempt);
-
+  var key = 'mohammadLifeQuiz_' + stName + '_' + stDob;
+  var previousAttempts = parseInt(localStorage.getItem(key) || '0', 10);
+  if (previousAttempts >= 3) previousAttempts = 0;
+  var currentAttempt = previousAttempts + 1;
+  localStorage.setItem(key, currentAttempt);
 
   var subject=encodeURIComponent('Hazrat Mohammad SAW Life Quiz Result - '+stName);
   var body='Hazrat Mohammad SAW Life Quiz Result%0D%0A%0D%0A'+
@@ -690,27 +1129,41 @@ localStorage.setItem(key, currentAttempt);
            'DG Skills Auto Summary.';
   var mailLink='mailto:dgskills4u@gmail.com?subject='+subject+'&body='+body;
 
+  /* ✅ WhatsApp link to your number */
+  var waText =
+    'Hazrat Mohammad SAW Life Quiz Result%0A%0A' +
+    'Name: ' + encodeURIComponent(stName) + '%0A' +
+    'DOB: ' + encodeURIComponent(stDob) + '%0A' +
+    'Attempt: ' + currentAttempt + '%0A' +
+    'Score: ' + pt + '%25 (' + ct + '/' + qs.length + ')%0A%0A' +
+    'Shared via IFA Learning Hub';
+  var waLink = 'https://wa.me/447470831407?text=' + waText;
+
   var h='';
-  h+='<div class="h">'+
+  h += ayatHTML(); /* ✅ AYAT on top */
+  h+='<div class="h header-box">'+
        logoHTML()+
-       '<h1>Hazrat Mohammad SAW Life Quiz</h1>'+
-       '<div class="ci">Candidate: <strong>'+stName+'</strong> | DOB: <strong>'+stDob+'</strong></div>'+
+       '<h1>'+ui("title")+'</h1>'+
+       '<div class="designer">'+ui("designer")+'</div>'+
+       langBarHTML()+
+       '<div class="ci">'+ui("candidate")+': <strong>'+stName+'</strong> | '+ui("dob")+': <strong>'+stDob+'</strong></div>'+
      '</div>';
 
   h+='<div class="r">'+
-       '<h2>Quiz Complete!</h2>'+
+       '<h2>'+ui("complete")+'</h2>'+
        '<div class="sc '+(pt>=70?'e':pt>=50?'g':'p')+'">'+pt+'%</div>'+
-       '<p>You scored '+ct+' out of '+qs.length+' questions.</p>';
+       '<p>'+ui("scored")+' '+ct+' '+ui("outOf")+' '+qs.length+' '+t("سوالات | questions | вопросов")+'.</p>';
 
   if(currentAttempt > 1){
     h+='<p style="margin-top:8px;color:#b91c1c;font-weight:700;">'+
-        'Note: This is your '+currentAttempt+' attempt for this quiz.'+
+        ui("noteAttempt")+' '+currentAttempt+' '+ui("attemptWord")+
        '</p>';
   }
 
   h+='<div style="margin-top:25px; display:flex; flex-direction:column; gap:10px;">'+
-         '<a href="'+mailLink+'"><button class="sb">Email Result to DG Skills</button></a>'+
-         '<button class="skb" onclick="goToRegistration()">End & Restart</button>'+
+         '<a href="'+mailLink+'"><button class="sb">'+ui("emailBtn")+'</button></a>'+
+         '<a href="'+waLink+'" target="_blank"><button class="wa-btn">Share Result on WhatsApp</button></a>'+
+         '<button class="skb" onclick="goToRegistration()">'+ui("restart")+'</button>'+
        '</div>'+
      '</div>';
 
@@ -735,21 +1188,26 @@ function goToRegistration(){
 function showRegister(){
   stopTimers();
   var h='';
+  h += ayatHTML(); /* ✅ AYAT on top */
   h+='<div class="reg-screen">'+
-       logoHTML()+
-       '<h1>Hazrat Mohammad SAW Life Quiz</h1>'+
-       '<p>Please register your details before starting the quiz.</p>'+
+       '<div class="h header-box">'+
+         logoHTML()+
+         '<h1>'+ui("title")+'</h1>'+
+         '<div class="designer">'+ui("designer")+'</div>'+
+         langBarHTML()+
+       '</div>'+
+       '<p>'+ui("registerMsg")+'</p>'+
        '<div class="reg-form">'+
-         '<div class="reg-error" id="regError">Please enter your name and date of birth.</div>'+
+         '<div class="reg-error" id="regError">'+ui("regError")+'</div>'+
          '<div class="reg-field">'+
-           '<label for="regName">Full Name</label>'+
-           '<input type="text" id="regName" placeholder="Enter your full name">'+
+           '<label for="regName">'+ui("fullName")+'</label>'+
+           '<input type="text" id="regName" placeholder="'+ui("fullName")+'">'+
          '</div>'+
          '<div class="reg-field">'+
-           '<label for="regDob">Date of Birth</label>'+
+           '<label for="regDob">'+ui("dobLabel")+'</label>'+
            '<input type="date" id="regDob">'+
          '</div>'+
-         '<button class="sb" onclick="handleRegister()">Register & Continue</button>'+
+         '<button class="sb" onclick="handleRegister()">'+ui("registerBtn")+'</button>'+
        '</div>'+
      '</div>';
   APP.innerHTML=h;
@@ -774,29 +1232,34 @@ function showStart(){
   stopTimers();
   totalTime = 600;
   var h='';
+  h += ayatHTML(); /* ✅ AYAT on top */
   h+='<div class="start-screen">'+
-       logoHTML()+
-       '<h1>Hazrat Mohammad SAW Life Quiz</h1>'+
-       '<p>Welcome, <strong>'+stName+'</strong> (DOB: '+stDob+').</p>'+
+       '<div class="h header-box">'+
+         logoHTML()+
+         '<h1>'+ui("title")+'</h1>'+
+         '<div class="designer">'+ui("designer")+'</div>'+
+         langBarHTML()+
+         '<div class="ci">'+ui("candidate")+': <strong>'+stName+'</strong> | '+ui("dob")+': <strong>'+stDob+'</strong></div>'+
+       '</div>'+
        '<div class="start-info">'+
-         '<h3>Quiz Information:</h3>'+
+         '<h3>'+ui("quizInfo")+':</h3>'+
          '<ul>'+
-           '<li>Total test time: 1 hour</li>'+
-           '<li>Each question time: 60 seconds</li>'+
-           '<li>20 questions on Hazrat Mohammad SAW Life Quiz </li>'+
-           '<li>Questions appear in random order each attempt</li>'+
-           '<li>Use Previous, Skip and Flag to manage your time</li>'+
-           '<li>Final score can be emailed directly to DG Skills</li>'+
+           '<li>'+ui("totalTestTime")+'</li>'+
+           '<li>'+ui("eachQuestionTime")+': '+questionTime+' '+t("سیکنڈ | seconds | секунд")+'</li>'+
+           '<li>'+ui("questionsCount")+'</li>'+
+           '<li>'+ui("randomOrder")+'</li>'+
+           '<li>'+ui("controls")+'</li>'+
+           '<li>'+ui("emailInfo")+'</li>'+
          '</ul>'+
        '</div>'+
-       '<button class="sb" onclick="startQuiz()">Start Quiz</button>'+
+       '<button class="sb" onclick="startQuiz()">'+ui("startBtn")+'</button>'+
      '</div>';
   APP.innerHTML=h;
 }
 
 /* START QUIZ */
 function startQuiz(){
-  shuffleQuestions();      // randomise order each attempt
+  shuffleQuestions();
   cq=0;
   ua = {};
   lq = {};
